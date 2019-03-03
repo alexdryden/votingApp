@@ -3,8 +3,8 @@ from django.views import View
 
 from .models import (
     Judge,
-    Author,
-    Year,
+    Candidate,
+    Member,
 )
 
 
@@ -21,7 +21,7 @@ class JudgeList(View):
     def get(self, request):
         return render(
             request,
-            'votingAppHTML/judgeList.html',
+            'votingAppHTML/memberList.html',
             {'judge_list': Judge.objects.all()}
         )
 
@@ -34,19 +34,34 @@ class JudgeDetail(View):
         )
 
         return render_to_response(
-            'votingAppHTML/judgeDetail.html',
+            'votingAppHTML/memberDetail.html',
             {'judge': judge}
         )
 
 
-class AuthorDetail(View):
+class CandidateDetail(View):
     def get(self, request, pk):
-        author = get_object_or_404(
-            Author,
+        candidate = get_object_or_404(
+            Candidate,
             pk=pk
         )
+        score_list = candidate.rating.all()
+        avg = sum([score.avg() for score in score_list])/len(score_list)
 
         return render_to_response(
-            'votingAppHTML/authorDetail.html',
-            {'author': author}
+            'votingAppHTML/candidateDetail.html',
+            {'candidate': candidate, 'score_list': score_list, 'avg': avg}
+        )
+
+
+class MemberDetail(View):
+    def get(self, request, pk):
+        member = get_object_or_404(
+            Member,
+            pk=pk
+        )
+        year_list = member.judge.all()
+        return render_to_response(
+            'votingAppHTML/memberDetail.html',
+            {'member': member, 'year_list': year_list}
         )

@@ -1,11 +1,11 @@
 from django.urls import path
 
-from webVotingApp.views import AuthorList, JudgeList, JudgeDetail, AuthorDetail
+from webVotingApp.views import AuthorList, JudgeList, MemberDetail, CandidateDetail
 
 urlpatterns_dict = {'authors': AuthorList,
                     'judges': JudgeList,
-                    'judge/<int:pk>': JudgeDetail,
-                    'author/<int:pk>': AuthorDetail,
+                    'member/<int:pk>': MemberDetail,
+                    'candidate/<int:pk>': CandidateDetail,
                     }
 
 urlpatterns = [path(key + '/',

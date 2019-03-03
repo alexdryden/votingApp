@@ -1,34 +1,34 @@
 {% extends 'votingAppHTML/base.html' %}
 
 {% block title %}
-    Author - {{ author }}
+    Member - {{ member }}
 {% endblock %}
 
 {% block content %}
-    <h2>{{ author }}</h2>
+    <h2>{{ member }}</h2>
 
     <section>
         <table>
             <tr>
                 <th>First Name:</th>
-                <td>{{ author.author_first_name }}</td>
+                <td>{{ member.member_first_name }}</td>
             </tr>
             <tr>
                 <th>Last Name:</th>
-                <td>{{ author.author_last_name }}</td>
+                <td>{{ member.member_last_name }}</td>
             </tr>
         </table>
     </section>
 
     <section>
-        <h3>Author Scores (avg: #.#) </h3>
+        <h3>Years Participated</h3>
         <ul>
-            {% for score in score_list %}
+            {% for year in year_list %}
                 <li>
-                    {{ score }}
+                    {{ year }}
                 </li>
             {% empty %}
-                <li><em>There are currently no scores for this author.</em></li>
+                <li><em>There are currently no years for this judge.</em></li>
             {% endfor %}
         </ul>
     </section>

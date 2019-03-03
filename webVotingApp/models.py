@@ -23,7 +23,7 @@ class Year(models.Model):
 
 class Judge(models.Model):
     judge_id = models.AutoField(primary_key=True)
-    year = models.ForeignKey(Year, related_name='judge',on_delete=models.CASCADE)
+    year = models.ForeignKey(Year, related_name='judge', on_delete=models.CASCADE)
     member = models.ForeignKey(Member, related_name='judge', on_delete=models.PROTECT)
 
     def __str__(self):
@@ -66,11 +66,11 @@ class Vote(models.Model):
 
 
 class Rating(models.Model):
-    POOR = 'PR'
-    COMMON = 'CM'
-    GOOD = 'GD'
-    OUTSTANDING = 'OT'
-    SUPERLATIVE = 'SP'
+    POOR = '1'
+    COMMON = '2'
+    GOOD = '3'
+    OUTSTANDING = '4'
+    SUPERLATIVE = '5'
 
     rating_choices = (
         (POOR, 'Poor'),
@@ -88,9 +88,19 @@ class Rating(models.Model):
     judge = models.ForeignKey(Judge, related_name='rating', on_delete=models.CASCADE)
     candidate = models.ForeignKey(Candidate, related_name='rating', on_delete=models.CASCADE)
 
+    def avg(self):
+        return (int(self.criteria_1) + int(self.criteria_2) + int(self.criteria_3) + int(self.criteria_4) + int(
+            self.criteria_5)) / 5
+
     def __str__(self):
-        return '%s, %s -scores by %s' % (
+        def avg(self):
+            return str((int(self.criteria_1) + int(self.criteria_2) + int(self.criteria_3) + int(self.criteria_4) + int(
+                self.criteria_5)) / 5)
+
+        return '%s, %s - Avg by %s:%s' % (
             self.candidate.author.author_last_name,
             self.candidate.author.author_first_name,
-            self.judge.member.member_last_name
+            self.judge.member.member_last_name,
+            avg(self)
         )
+
