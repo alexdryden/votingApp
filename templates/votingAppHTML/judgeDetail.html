@@ -1,0 +1,35 @@
+{% extends 'votingAppHTML/base.html' %}
+
+{% block title %}
+    Author - {{ judge }}
+{% endblock %}
+
+{% block content %}
+    <h2>{{ judge }}</h2>
+
+    <section>
+        <table>
+            <tr>
+                <th>First Name:</th>
+                <td>{{ judge.judge_first_name }}</td>
+            </tr>
+            <tr>
+                <th>Last Name:</th>
+                <td>{{ judge.judge_last_name }}</td>
+            </tr>
+        </table>
+    </section>
+
+    <section>
+        <h3>Years Participated</h3>
+        <ul>
+            {% for year in year_list %}
+                <li>
+                    {{ year }}
+                </li>
+            {% empty %}
+                <li><em>There are currently no years for this judge.</em></li>
+            {% endfor %}
+        </ul>
+    </section>
+{% endblock %}
