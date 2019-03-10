@@ -93,7 +93,8 @@ class Rating(models.Model):
             self.criteria_5)) / 5
 
     def __str__(self):
-        def avg(self):
+
+        def avg():
             return str((int(self.criteria_1) + int(self.criteria_2) + int(self.criteria_3) + int(self.criteria_4) + int(
                 self.criteria_5)) / 5)
 
@@ -101,6 +102,6 @@ class Rating(models.Model):
             self.candidate.author.author_last_name,
             self.candidate.author.author_first_name,
             self.judge.member.member_last_name,
-            avg(self)
+            avg()
         )
 
