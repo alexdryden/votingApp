@@ -33,7 +33,7 @@ class JudgeDetail(View):
             pk=pk
         )
 
-        return render_to_response(
+        return render(request,
             'votingAppHTML/memberDetail.html',
             {'judge': judge}
         )
@@ -48,7 +48,7 @@ class CandidateDetail(View):
         score_list = candidate.rating.all()
         avg = sum([score.avg() for score in score_list])/len(score_list)
 
-        return render_to_response(
+        return render(request,
             'votingAppHTML/candidateDetail.html',
             {'candidate': candidate, 'score_list': score_list, 'avg': avg}
         )
@@ -61,7 +61,7 @@ class MemberDetail(View):
             pk=pk
         )
         year_list = member.judge.all()
-        return render_to_response(
+        return render(request,
             'votingAppHTML/memberDetail.html',
             {'member': member, 'year_list': year_list}
         )
