@@ -5,7 +5,17 @@ from .models import (
     Judge,
     Candidate,
     Member,
+    Author,
 )
+
+
+class VotingPage(View):
+    def get(self, request):
+        return render(
+            request,
+            'votingAppHTML/votingPage.html',
+            {'author_list': Author.objects.all()}
+        )
 
 
 class AuthorList(View):
@@ -48,7 +58,8 @@ class CandidateDetail(View):
         score_list = candidate.rating.all()
         avg = sum([score.avg() for score in score_list])/len(score_list)
 
-        return render(request,
+        return render(
+            request,
             'votingAppHTML/candidateDetail.html',
             {'candidate': candidate, 'score_list': score_list, 'avg': avg}
         )
