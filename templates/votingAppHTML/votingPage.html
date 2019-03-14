@@ -6,22 +6,17 @@ Voting Page
 
 {% block content %}
 
+    <a title="Filter Category" id="general" class=""><i>count the checkboxes <small class="counter"></small></i></a>
 
-    <h2>Authors</h2>
-    <div class="position-sticky">
-        <p>You have made
-            <p id="remaining"></p>
-        <p>votes </p>
+            <div id="general-content" class="form-check">
+                <ul>
 
-    </div>
+                    {% for author in author_list %}
 
-        {% for author in author_list %}
-            <div class="form-check">
-              <input class="form-check-input" type="checkbox" value="" name="wpmm[]" id="defaultCheck1{{ author.author_first_name }}">
-              <label class="form-check-label" for="defaultCheck1{{ author.author_first_name }}">
+                  <li><input class="form-check-input" type="checkbox" value="" name="wpmm[]"id="defaultCheck1{{ author.author_first_name }}"><label class="form-check-label" for="defaultCheck1{{ author.author_first_name }}">
                   {{ author }}
               </label>
-                <p>
+                                     <p>
                   <a class="btn btn-primary" data-toggle="collapse" href="#multiCollapseExample1{{ author.author_first_name }}" role="button" aria-expanded="false" aria-controls="multiCollapseExample1{{ author.author_first_name }}">Toggle first element</a>
                   <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#multiCollapseExample2{{ author.author_first_name }}" aria-expanded="false" aria-controls="multiCollapseExample2{{ author.author_first_name }}">Toggle second element</button>
                   <button class="btn btn-primary" type="button" data-toggle="collapse" data-target=".multi-collapse" aria-expanded="false" aria-controls="multiCollapseExample1{{ author.author_first_name }} multiCollapseExample2{{ author.author_first_name }}">Toggle both elements</button>
@@ -43,21 +38,95 @@ Voting Page
                   </div>
                 </div>
 
-                </div>
-
-
+                {% empty %}
+                    <li><em>There are currently no courses available.</em></li>
+                {% endfor %}
+                </ul>
             </div>
-        {% empty %}
-            <li><em>There are currently no courses available.</em></li>
-        {% endfor %}
+
+{#    <h2>Authors</h2>#}
+{#    <div class="position-sticky">#}
+{#        <a title="Filter Category" id="general" class=""><i>You have made <small class="counter"> </small> selections</i></a>#}
+{##}
+{#    </div>#}
+{##}
+{#        {% for author in author_list %}#}
+{#            <div class="form-check">#}
+{#              <input class="form-check-input" type="checkbox" value="" name="wpmm[]" id="defaultCheck1{{ author.author_first_name }}">#}
+{#              <label class="form-check-label" for="defaultCheck1{{ author.author_first_name }}">#}
+{#                  {{ author }}#}
+{#              </label>#}
+{#                <p>#}
+{#                  <a class="btn btn-primary" data-toggle="collapse" href="#multiCollapseExample1{{ author.author_first_name }}" role="button" aria-expanded="false" aria-controls="multiCollapseExample1{{ author.author_first_name }}">Toggle first element</a>#}
+{#                  <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#multiCollapseExample2{{ author.author_first_name }}" aria-expanded="false" aria-controls="multiCollapseExample2{{ author.author_first_name }}">Toggle second element</button>#}
+{#                  <button class="btn btn-primary" type="button" data-toggle="collapse" data-target=".multi-collapse" aria-expanded="false" aria-controls="multiCollapseExample1{{ author.author_first_name }} multiCollapseExample2{{ author.author_first_name }}">Toggle both elements</button>#}
+{#                </p>#}
+{#                <div class="row">#}
+{#                  <div class="col">#}
+{#                    <div class="collapse multi-collapse" id="multiCollapseExample1{{ author.author_first_name }}">#}
+{#                      <div class="card card-body">#}
+{#                        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.#}
+{#                      </div>#}
+{#                    </div>#}
+{#                  </div>#}
+{#                  <div class="col">#}
+{#                    <div class="collapse multi-collapse" id="multiCollapseExample2{{ author.author_first_name }}">#}
+{#                      <div class="card card-body">#}
+{#                        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.#}
+{#                      </div>#}
+{#                    </div>#}
+{#                  </div>#}
+{#                </div>#}
+{##}
+{#                </div>#}
+{##}
+{##}
+{#            </div>#}
+{#        {% empty %}#}
+{#            <li><em>There are currently no courses available.</em></li>#}
+{#        {% endfor %}#}
+{#<script type = "text/javascript">#}
+{#    var numberOfChecked = 0;#}
+{#    document.getElementById("remaining").innerHTML = numberOfChecked;#}
+{##}
+{##}
+{##}
+{##}
+{##}
+{#</script>#}
+{#general updates the counter text. Use the id="general" for that div#}
+{#general-content looks for things named "wpmm" and counts the ones that are checked, updating general   #}
 <script type = "text/javascript">
-    var numberOfChecked = 0;
-    document.getElementById("remaining").innerHTML = numberOfChecked;
+   $(function() {
+	$('#general i .counter').text('0');
 
+	var generallen = $("#general-content input[name='wpmm[]']:checked").length;
+	if(generallen>0){$("#general i .counter").text('('+generallen+')');}else{$("#general i .counter").text('0');}
+})
 
+function updateCounter() {
+    var len = $("#general-content input[name='wpmm[]']:checked").length;
+	if(len>0){$("#general i .counter").text('('+len+')');}else{$("#general i .counter").text('0');}
+}
 
+$("#general-content input:checkbox").on("change", function() {
+	updateCounter();
+});
 
+$(function() {
+	$('.select_all').change(function() {
+		var checkthis = $(this);
+		var checkboxes = $(this).parent().next('ul').find("input[name='wpmm[]']");
 
+		if(checkthis.is(':checked')) {
+			checkboxes.attr('checked', true);
+		} else {
+			checkboxes.attr('checked', false);
+		}
+        updateCounter();
+	});
+
+})
 </script>
 
 
