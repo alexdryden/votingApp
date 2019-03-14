@@ -6,14 +6,18 @@ Voting Page
 
 {% block content %}
 
+
     <h2>Authors</h2>
     <div class="position-sticky">
-    <p>You have 5/5 votes left</p>
+        <p>You have made
+            <p id="remaining"></p>
+        <p>votes </p>
+
     </div>
 
         {% for author in author_list %}
             <div class="form-check">
-              <input class="form-check-input" type="checkbox" value="" id="defaultCheck1{{ author.author_first_name }}">
+              <input class="form-check-input" type="checkbox" value="" name="wpmm[]" id="defaultCheck1{{ author.author_first_name }}">
               <label class="form-check-label" for="defaultCheck1{{ author.author_first_name }}">
                   {{ author }}
               </label>
@@ -46,5 +50,15 @@ Voting Page
         {% empty %}
             <li><em>There are currently no courses available.</em></li>
         {% endfor %}
+<script type = "text/javascript">
+    var numberOfChecked = 0;
+    document.getElementById("remaining").innerHTML = numberOfChecked;
+
+
+
+
+
+</script>
+
 
 {% endblock %}
