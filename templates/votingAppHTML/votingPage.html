@@ -112,6 +112,7 @@ function updateChoice(state, id) {
     }
     else {
         document.getElementById(author).remove()
+        document.getElementById(id).classList.toggle('checked')
     }
     enforceMaxChoices()
 
